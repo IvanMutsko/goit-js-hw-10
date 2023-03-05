@@ -16,7 +16,6 @@ refs.inputField.addEventListener(
   debounce(() => {
     const trimValue = refs.inputField.value.trim();
     listClear();
-
     if (trimValue !== '') {
       fetchCountries(trimValue)
         .then(dataOfCountries => {
@@ -37,6 +36,7 @@ refs.inputField.addEventListener(
         })
         .catch(error => {
           Notiflix.Notify.failure('Oops, there is no country with that name');
+          return;
         });
     }
   }, DEBOUNCE_DELAY)
@@ -45,7 +45,7 @@ refs.inputField.addEventListener(
 function makeMarkupOfListCountries(countries) {
   const markupCountries = countries
     .map(country => {
-      return `<li><img src="${country.flags.svg}" alt="country flag" width="30px">${country.name.official}</li>`;
+      return `<li class="list-item"><img class="flag" src="${country.flags.svg}" alt="country flag" width="40px">${country.name.official}</li>`;
     })
     .join('');
 
@@ -54,15 +54,15 @@ function makeMarkupOfListCountries(countries) {
 
 function makeMarkupOfSingleCountrie(country) {
   const markupCountry = country.map(countryInfo => {
-    return `<h2><img src="${
+    return `<h2 class="country-title"><img class="flag" src="${
       countryInfo.flags.svg
-    }" alt="country flag" width="60px"/>${
+    }" alt="country flag" width="70px"/>${
       countryInfo.name.official
-    }</h2><ul><li><h3>Capital: <span>${
+    }</h2><ul class="country-list"><li class="list-item"><h3>Capital: <span class="value">${
       countryInfo.capital
-    }</span></h3></li><li><h3>Population: <span>${
+    }</span></h3></li><li class="list-item"><h3>Population: <span class="value">${
       countryInfo.population
-    }</span></h3></li><li><h3>Languages: <span>${Object.values(
+    }</span></h3></li><li class="list-item"><h3>Languages: <span class="value">${Object.values(
       countryInfo.languages
     ).join(', ')}</span></h3></li></ul>`;
   });
